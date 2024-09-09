@@ -72,13 +72,13 @@ class GaitRecognitionModel(nn.Module):
 
 
 # Load and preprocess data
-def load_data(file_path):
-    # Load .dat file and preprocess
-    data = np.fromfile(file_path, dtype=np.float32).reshape(1, 1, 500, 90)
-    data = torch.from_numpy(data).float()
-    return data
+# def load_data(file_path):
+#     # Load .dat file and preprocess
+#     data = np.fromfile(file_path, dtype=np.float32).reshape(1, 1, 500, 90)
+#     data = torch.from_numpy(data).float()
+#     return data
 
-data = torch.randn(1, 1, 500, 90)
+data = torch.randn(1, 3, 6000 , 56)
 
 # Initialize the model
 num_classes = 10  # Adjust based on your needs
@@ -125,7 +125,7 @@ torch.onnx.export(
 )
 
 
-model_file = 'p.onnx'
+model_file = 'b.onnx'
 onnx_model = onnx.load(model_file)
 onnx.save(onnx.shape_inference.infer_shapes(onnx_model), model_file)
 

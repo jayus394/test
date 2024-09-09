@@ -7,10 +7,11 @@ from torch.utils.data import TensorDataset, DataLoader
 def generate_csi_data(num_persons, num_samples, num_tx_rx, num_time, num_subcarriers):
     """
     生成模拟的CSI数据。形状为 (num_person, num_samples, num_tx_rx, num_time, num_subcarriers)
-    输出所有人的步态幅度数据，形状为(10, 100, 3, 6000, 56)和(10, 100)个标签。
+    输出所有人的步态幅度数据，形状为(10, 5, 6000, 3, 56)和(10, 100)个标签。
+    N*6000*3*56
     """
-    csi_data = np.random.randn(num_persons, num_samples, num_tx_rx, num_time, num_subcarriers) + \"":
-               1j * np.random.randn(num_persons, num_samples, num_tx_rx, num_time, num_subcarriers)
+    csi_data = np.random.randn(num_persons, num_samples, num_time, num_tx_rx, num_subcarriers) + \
+               1j * np.random.randn(num_persons, num_samples, num_time, num_tx_rx, num_subcarriers)
 
     csi_amplitude = torch.tensor(np.abs(csi_data))
     labels = np.arange(0, num_persons).reshape(-1, 1) * np.ones((1, 100))
@@ -18,6 +19,25 @@ def generate_csi_data(num_persons, num_samples, num_tx_rx, num_time, num_subcarr
 
     return csi_amplitude, labels
 
+
+def plot_csi_amplitude(csi_amplitude):
+    """
+    输入 (batch_size, num_tx_rx, num_time, num_subcarriers)的步态CSI幅度数据
+    绘制CSI幅度数据的二维图形。
+    """
+    batch_size, num_tx_rx, num_time, num_subcarriers = csi_amplitude.shape
+
+    for b in range(batch_size):
+        for tx_rx in range(num_tx_rx):
+            plt.figure(figsize=(15, 10))
+            for subcarrier in range(num_subcarriers):
+                plt.plot(range(num_time), csi_amplitude[b, tx_rx, :, subcarrier], label=f'Subcarrier {subcarrier + 1}')
+
+            plt.xlabel('Time')
+            plt.ylabel('Amplitude')
+            plt.legend(loc='upper right', bbox_to_anchor=(1.15, 1))
+            plt.grid(True)
+            plt.show()
 
 
 def data_loader(num_persons, csi_amplitude, labels, batch_size):
@@ -62,7 +82,7 @@ def data_loader(num_persons, csi_amplitude, labels, batch_size):
 
 if __name__ == "__main__":
     num_persons = 10
-    num_samples = 10
+    num_samples = 100
     num_time = 6000
     num_tx_rx = 3
     num_subcarriers = 56

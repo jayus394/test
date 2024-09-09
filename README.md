@@ -14,7 +14,6 @@
 동일한 실습 환경을 위해 docker 를 사용하실 분은  [docker_user_guide.md](docker_user_guide.md) 파일을 참고하세요! :)
 
 ### Install Requirements
-
 ```bash
 pip install -r requirements.txt
 ```
@@ -84,3 +83,7 @@ We always welcome your comments and pull requests
 * Lab-11-6 PackedSequence
 * ok3
 * ok2
+
+```shell
+echo OK
+```

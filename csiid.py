@@ -119,13 +119,13 @@ def predict(model, data):
 
 torch.onnx.export(
     model,  # 要导出的模型
-    data,  # 示例输入张量
+    data,  # 示例输入张量:
     "b.onnx",
     export_params=True,
 )
 
 
-model_file = 'b.onnx'
+model_file = 'p.onnx'
 onnx_model = onnx.load(model_file)
 onnx.save(onnx.shape_inference.infer_shapes(onnx_model), model_file)
 

@@ -82,4 +82,4 @@ We always welcome your comments and pull requests
 * Lab-11-4 RNN timeseries
 * Lab-11-5 RNN seq2seq
 * Lab-11-6 PackedSequence
-* ok
+* ok2
